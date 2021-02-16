@@ -6,10 +6,14 @@ const args = minimist(process.argv.slice(2), {
   alias: {
     h: ["help", "?"],
     p: ["proceed"],
+    v: ["verbose"],
   },
 });
 
 function printUsage() {
+  if (args.verbose) {
+    console.debug("Entered printUsage"());
+  }
   ["Usage: node index.js [-p, --proceed] [-h, --help]", ""].forEach((x) =>
     console.log(x)
   );
@@ -17,7 +21,14 @@ function printUsage() {
 }
 
 async function main() {
+  if (args.verbose) {
+    console.debug("Entering main"());
+  }
+
   if (args.help) {
+    if (args.verbose) {
+      console.debug("`help` detected");
+    }
     printUsage();
   }
 
@@ -26,9 +37,25 @@ async function main() {
     printUsage();
   }
 
+  if (args.verbose) {
+    console.debug("Proceeding...");
+  }
+
   console.log("Hello, world!");
+  console.debug("End of main()");
 }
 
-main().catch((e) => {
-  console.error("Unhandled exception", e);
-});
+main()
+  .then(() => {
+    if (args.verbose) {
+      console.info("main() completed");
+    }
+  })
+  .catch((e) => {
+    console.error("Unhandled exception", e);
+  })
+  .finally(() => {
+    if (args.verbose) {
+      console.info("finally reached");
+    }
+  });
