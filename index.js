@@ -14,15 +14,16 @@ function printUsage() {
   if (args.verbose) {
     console.debug("Entered printUsage"());
   }
-  ["Usage: node index.js [-p, --proceed] [-h, --help]", ""].forEach((x) =>
-    console.log(x)
-  );
+  [
+    "Usage: node index.js [-p, --proceed] [-h, --help] [-v, --verbose]",
+    "",
+  ].forEach((x) => console.log(x));
   process.exit();
 }
 
 async function main() {
   if (args.verbose) {
-    console.debug("Entering main"());
+    console.debug("Entering main");
   }
 
   if (args.help) {
