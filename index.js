@@ -16,6 +16,26 @@ function printUsage() {
   process.exit();
 }
 
+function sleep(seconds) {
+  return new Promise((resolve) => setTimeout(resolve, 1000 * seconds));
+}
+
+function dotSpam() {
+  let going = true;
+  return (function () {
+    new Promise(async (resolve) => {
+      while (going) {
+        process.stdout.write(".");
+        await sleep(0.125);
+      }
+      resolve();
+    });
+    return function () {
+      going = false;
+    };
+  })();
+}
+
 async function main() {
   if (args.help) {
     printUsage();
@@ -26,7 +46,11 @@ async function main() {
     printUsage();
   }
 
+  const stopDots = dotSpam();
+  await sleep(1);
   console.log("Hello, world!");
+  await sleep(2);
+  stopDots();
   console.log("Goodbye, world!");
 }
 
