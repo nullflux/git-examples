@@ -22,9 +22,13 @@ function sleep(seconds) {
 
 async function writeSlow(str) {
   const values = str.split("");
-  for (char of values) {
-    process.stdout.write(char);
-    await sleep(0.1 * Math.random());
+  let count = 1;
+  for (ch of values) {
+    process.stdout.write(ch);
+    if (!/[\s\.,]/.test(ch)) {
+      const delay = (0.3 * Math.random()) / Math.log(++count);
+      await sleep(delay);
+    }
   }
   process.stdout.write("\n");
 }
