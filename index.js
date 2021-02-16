@@ -27,6 +27,7 @@ async function main() {
   }
 
   console.log("Hello, world!");
+  console.log("Goodbye, world!");
 }
 
 main().catch((e) => {
