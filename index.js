@@ -12,7 +12,7 @@ const args = minimist(process.argv.slice(2), {
 
 function printUsage() {
   if (args.verbose) {
-    console.debug("Entered printUsage"());
+    console.debug("Entered printUsage");
   }
   [
     "Usage: node index.js [-p, --proceed] [-h, --help] [-v, --verbose]",
@@ -23,7 +23,8 @@ function printUsage() {
 
 async function main() {
   if (args.verbose) {
-    console.debug("Entering main");
+    console.debug("Entering main...");
+    console.debug("All args", args);
   }
 
   if (args.help) {
@@ -42,8 +43,11 @@ async function main() {
     console.debug("Proceeding...");
   }
 
+  /////////////////////////////////////////////////////////
   console.log("Hello, world!");
-  console.debug("End of main()");
+  /////////////////////////////////////////////////////////
+
+  console.debug("end of main()");
 }
 
 main()
