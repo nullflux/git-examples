@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const minimist = require("minimist");
+const fetch = require("node-fetch");
 
 const args = minimist(process.argv.slice(2), {
   alias: {
@@ -29,6 +30,14 @@ async function writeSlow(str) {
   process.stdout.write("\n");
 }
 
+function hipsum(sentences = 3) {
+  return fetch(
+    `https://hipsum.co/api/?type=hipster-centric&sentences=${sentences}`
+  )
+    .then((result) => result.json())
+    .then((json) => json[0]);
+}
+
 async function main() {
   if (args.help) {
     printUsage();
@@ -39,11 +48,7 @@ async function main() {
     printUsage();
   }
 
-  await writeSlow(`Hello, world
-This is a longer corpus of text, which will take some time to put on the screen
-
-Tbh stumptown unicorn biodiesel actually. Tofu four loko squid flannel wolf PBR&B activated charcoal kogi deep v single-origin coffee hoodie unicorn. You probably haven't heard of them hella single-origin coffee put a bird on it before they sold out. Farm-to-table green juice offal chia poke pop-up freegan locavore franzen craft beer af synth. Flannel banh mi snackwave, squid fixie shoreditch church-key.
-`);
+  await writeSlow(await hipsum());
 }
 
 main().catch((e) => {
